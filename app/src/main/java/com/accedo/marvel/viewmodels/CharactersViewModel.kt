@@ -7,12 +7,17 @@ import com.accedo.marvel.repositories.CharacterRepository
 
 class CharactersViewModel: ViewModel() {
 
-    private val repository: CharacterRepository
+    private val repository: CharacterRepository = CharacterRepository()
     val characters: LiveData<List<Character>>
+    var offsetCounter = 0
 
     init {
-        repository = CharacterRepository()
         characters = repository.allCharacters
+    }
+
+    fun getCharacteres(){
+        offsetCounter  = offsetCounter + 10
+        repository.getCharacters(offsetCounter)
     }
 
 }

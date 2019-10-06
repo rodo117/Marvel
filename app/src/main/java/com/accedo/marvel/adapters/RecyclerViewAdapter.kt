@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.card_view.view.*
 
 class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
-    var charactersList:List<Character> = ArrayList()
+    var charactersList:MutableList<Character> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
@@ -45,8 +45,11 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
     }
 
     fun setData(images:List<Character>){
-        charactersList = images
-        notifyDataSetChanged()
+        val size = this.charactersList.size
+        charactersList.addAll(images)
+        val sizeNew = this.charactersList.size
+        //notifyDataSetChanged()
+        notifyItemRangeInserted(size, sizeNew)
     }
 
 }

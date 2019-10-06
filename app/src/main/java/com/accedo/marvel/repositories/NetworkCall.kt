@@ -25,6 +25,8 @@ class NetworkCall : ManageDataContract {
 
     override fun getCharacters(offset:Int): MutableLiveData<List<Character>> {
 
+        println("GetCharactersCalled $offset")
+
         GlobalScope.launch {
             val call = getRetrofit().create(ApiService::class.java).getCharacters(
                 "1",
