@@ -14,8 +14,7 @@ import kotlinx.coroutines.withContext
 
 
 class NetworkCall : ManageDataContract {
-
-    var charactersData = MutableLiveData<List<Character>>()
+    private var charactersData = MutableLiveData<List<Character>>()
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -24,7 +23,7 @@ class NetworkCall : ManageDataContract {
             .build()
     }
 
-    override fun getCharacters(): MutableLiveData<List<Character>> {
+    override fun getCharacters(offset:Int): MutableLiveData<List<Character>> {
 
         GlobalScope.launch {
             val call = getRetrofit().create(ApiService::class.java).getCharacters(
@@ -32,7 +31,7 @@ class NetworkCall : ManageDataContract {
                 "be08c7e14d54e9a3d0ad8b12c1e712d8",
                 "a66cf9e3611f152f02ef4e3609866681",
                 10,
-                0
+                offset
             ).execute()
             val response = call.body() as CharactersResponse
             var list: MutableList<Character> = ArrayList<Character>()

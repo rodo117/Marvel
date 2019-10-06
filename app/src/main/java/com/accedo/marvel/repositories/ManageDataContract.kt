@@ -5,5 +5,5 @@ import androidx.lifecycle.MutableLiveData
 import com.accedo.marvel.data.Character
 
 interface ManageDataContract {
-    fun getCharacters (): MutableLiveData<List<Character>>
+    fun getCharacters(offset: Int = 0): MutableLiveData<List<Character>>
 }
