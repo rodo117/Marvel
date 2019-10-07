@@ -12,7 +12,7 @@ class CharacterRepository() {
     /*private val manageDataContract:ManageDataContract = CharactersDataSource()
     var allCharacters: LiveData<List<Character>> = manageDataContract.getCharacters()
 
-    fun getCharacters(offset: Int) {
+    fun getCharacters() {
         allCharacters = manageDataContract.getCharacters(offset)
     }*/
 

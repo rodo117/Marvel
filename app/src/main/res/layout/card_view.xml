@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/character_name"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_normal_size"
             app:layout_constraintStart_toStartOf="parent"
