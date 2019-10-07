@@ -10,10 +10,10 @@ import java.time.ZoneOffset
 class CharacterRepository() {
 
     /*private val manageDataContract:ManageDataContract = CharactersDataSource()
-    var allCharacters: LiveData<List<Character>> = manageDataContract.getCharacters()
+    var allCharacters: LiveData<List<Character>> = manageDataContract.getData()
 
-    fun getCharacters() {
-        allCharacters = manageDataContract.getCharacters(offset)
+    fun getData() {
+        allCharacters = manageDataContract.getData(offset)
     }*/
 
 }

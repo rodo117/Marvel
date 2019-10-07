@@ -16,9 +16,9 @@
 
         <ImageView
             android:id="@+id/imageview_image"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:layout_width="@dimen/landscape_imageview_width"
+            android:layout_height="@dimen/landscape_imageview_height"
             android:src="@drawable/ic_launcher_background"
             android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
