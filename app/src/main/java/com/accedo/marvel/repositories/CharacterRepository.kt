@@ -9,11 +9,11 @@ import java.time.ZoneOffset
 
 class CharacterRepository() {
 
-    private val manageDataContract:ManageDataContract = NetworkCall()
+    /*private val manageDataContract:ManageDataContract = CharactersDataSource()
     var allCharacters: LiveData<List<Character>> = manageDataContract.getCharacters()
 
     fun getCharacters(offset: Int) {
         allCharacters = manageDataContract.getCharacters(offset)
-    }
+    }*/
 
 }

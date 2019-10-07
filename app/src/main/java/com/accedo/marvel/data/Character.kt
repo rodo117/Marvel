@@ -1,3 +1,5 @@
 package com.accedo.marvel.data
 
-data class Character(val name:String, val image:String)
+import com.google.gson.JsonArray
+
+data class Character(val id:String,val name:String, val image:String, val comics: JsonArray)
