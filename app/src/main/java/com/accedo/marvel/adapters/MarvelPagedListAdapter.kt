@@ -12,14 +12,18 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_view.view.*
 
 typealias ClickListener = (Character) -> Unit
-class MarvelPagedListAdapter(private val clickListener: ClickListener) : PagedListAdapter<Character,MarvelPagedListAdapter.ViewHolder >(
+class MarvelPagedListAdapter(private val isDetails:Boolean = false, private val clickListener: ClickListener) : PagedListAdapter<Character,MarvelPagedListAdapter.ViewHolder >(
     CharacterDiffCallback()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
-        return ViewHolder(view)
+        return if(!isDetails) {
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false))
+        }else{
+            ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_view_details, parent, false))
+        }
     }
+
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val character = getItem(position)

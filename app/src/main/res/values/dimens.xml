@@ -10,7 +10,7 @@
     <dimen name="landscape_imageview_width">190dp</dimen>
     <dimen name="landscape_imageview_height">140dp</dimen>
 
-    <dimen name="card_size">300dp</dimen>
+    <dimen name="card_size">200dp</dimen>
     <dimen name="default_elevation">7dp</dimen>
 
     <dimen name="text_normal_size">14sp</dimen>

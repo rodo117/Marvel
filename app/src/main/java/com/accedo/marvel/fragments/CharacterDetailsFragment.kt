@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,8 +15,10 @@ import com.accedo.marvel.adapters.MarvelPagedListAdapter
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.viewmodels.CharactersViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.card_view.*
 import kotlinx.android.synthetic.main.card_view.view.*
+import kotlinx.android.synthetic.main.card_view.view.imageview_image
+import kotlinx.android.synthetic.main.card_view.view.textview_name
+import kotlinx.android.synthetic.main.card_view_details.view.*
 import kotlinx.android.synthetic.main.items_recycler_view.view.*
 
 class CharacterDetailsFragment : Fragment(), ClickListener {
@@ -43,9 +44,10 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
 
         val character = arguments?.getSerializable(KEY) as? Character
 
-        adapter = MarvelPagedListAdapter(this);
+        adapter = MarvelPagedListAdapter(true,this);
         view.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false);
         view.recycler_view.adapter = adapter
+        view.textview_name.text = character?.description
         Picasso.get().load(character?.image.toString()).into(view.imageview_image)
 
         viewModel = activity?.run {

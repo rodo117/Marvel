@@ -1,28 +1,34 @@
-package com.accedo.marvel
+package com.accedo.marvel.activities
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
+import com.accedo.marvel.R
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.fragments.CharacterDetailsFragment
 import com.accedo.marvel.fragments.CharactersFragment
 import com.accedo.marvel.viewmodels.CharactersViewModel
+import com.accedo.marvel.viewmodels.CustomViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CharactersViewModel
-    val PAGES_SIZE = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProviders.of(this).get(CharactersViewModel::class.java)
+        val isCellphone = resources.getBoolean(R.bool.isCellphone)
+
+        if(isCellphone){
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
+        viewModel = ViewModelProviders.of(this,CustomViewModelFactory(isCellphone)).get(CharactersViewModel::class.java)
 
         supportFragmentManager.beginTransaction().add(R.id.frame_layout, CharactersFragment())
             .commit()
@@ -57,14 +63,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack()
         supportActionBar?.setTitle(R.string.app_name)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
-
-    fun configPaging(){
-        val config = PagedList.Config.Builder()
-            .setPageSize(PAGES_SIZE)
-            .setEnablePlaceholders(false)
-            .build()
     }
 
 }
