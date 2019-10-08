@@ -1,6 +1,7 @@
 package com.accedo.marvel.datasources
 
 
+import android.widget.Toast
 import com.accedo.marvel.data.Character
 import androidx.paging.PageKeyedDataSource
 import com.accedo.marvel.ApiService
@@ -13,7 +14,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource<Int, Character>() {
-
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -33,6 +33,8 @@ class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource
 
     private fun getComicsRequestList(character: Character): MutableList<Character> {
         var list: MutableList<Character> = ArrayList<Character>()
+
+        try {
         val call = getRetrofit(character.id).create(ApiService::class.java).getComics(TS, API_KEY, HASH).execute()
 
             val response = call.body() as CharactersResponse
@@ -55,6 +57,8 @@ class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource
                     list.add(Character(id = id, name=title , image=image))
                 }
             }
+        }catch (e: Exception){
+        }
         return list
     }
 

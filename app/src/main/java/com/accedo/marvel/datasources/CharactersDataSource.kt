@@ -39,44 +39,48 @@ open class CharactersDataSource : PageKeyedDataSource<Int, Character>() {
 
     private fun getCharactersRequestList(offset: Int): MutableList<Character> {
         var list: MutableList<Character> = ArrayList<Character>()
-        val call = getRetrofit().create(ApiService::class.java).getCharacters(
-            TS,
-            API_KEY,
-            HASH,
-            LIMIT,
-            offset
-        ).execute()
+        try {
+            val call = getRetrofit().create(ApiService::class.java).getCharacters(
+                TS,
+                API_KEY,
+                HASH,
+                LIMIT,
+                offset
+            ).execute()
 
-        val response = call.body() as CharactersResponse
+            val response = call.body() as CharactersResponse
 
-        if (response?.status == "Ok") {
-            val jsonArray: JsonArray = response.data.getAsJsonArray("results")
+            if (response?.status == "Ok") {
+                val jsonArray: JsonArray = response.data.getAsJsonArray("results")
 
-            jsonArray.forEach { jsonObject ->
-                val id = jsonObject.asJsonObject.get("id").asString
-                val name = jsonObject.asJsonObject.get("name").asString
-                var description:String? = jsonObject.asJsonObject.get("description").asString
-                println("description $description")
-                if (description == "") {
-                    description = "No Description"
-                }
-                val thumbnail = jsonObject.asJsonObject.get("thumbnail")
-                val path = thumbnail.asJsonObject.get("path").asString
-                val extension = thumbnail.asJsonObject.get("extension").asString
+                jsonArray.forEach { jsonObject ->
+                    val id = jsonObject.asJsonObject.get("id").asString
+                    val name = jsonObject.asJsonObject.get("name").asString
+                    var description: String? = jsonObject.asJsonObject.get("description").asString
+                    println("description $description")
+                    if (description == "") {
+                        description = "No Description"
+                    }
+                    val thumbnail = jsonObject.asJsonObject.get("thumbnail")
+                    val path = thumbnail.asJsonObject.get("path").asString
+                    val extension = thumbnail.asJsonObject.get("extension").asString
 
-                list.add(
-                    Character(
-                        id,
-                        name,
-                        description,
-                        path.plus("/").plus("landscape_large").plus(".").plus(extension)
+                    list.add(
+                        Character(
+                            id,
+                            name,
+                            description,
+                            path.plus("/").plus("landscape_large").plus(".").plus(extension)
+                        )
                     )
-                )
+                }
+
+
+            } else {
+                updateState(State.ERROR)
             }
 
-
-        }else{
-            updateState(State.ERROR)
+        }catch (e: Exception){
         }
         return list
     }
