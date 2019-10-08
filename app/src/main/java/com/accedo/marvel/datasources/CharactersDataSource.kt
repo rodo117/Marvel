@@ -1,5 +1,6 @@
 package com.accedo.marvel.datasources
 
+import androidx.lifecycle.MutableLiveData
 import com.accedo.marvel.ApiService
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.data.CharactersResponse
@@ -7,6 +8,7 @@ import com.google.gson.JsonArray
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.paging.PageKeyedDataSource
+import com.accedo.marvel.data.State
 
 open class CharactersDataSource : PageKeyedDataSource<Int, Character>() {
 
@@ -16,6 +18,8 @@ open class CharactersDataSource : PageKeyedDataSource<Int, Character>() {
         val LIMIT = 10
         val TS = "1"
     }
+
+    var state: MutableLiveData<State> = MutableLiveData()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -71,8 +75,14 @@ open class CharactersDataSource : PageKeyedDataSource<Int, Character>() {
             }
 
 
+        }else{
+            updateState(State.ERROR)
         }
         return list
+    }
+
+    private fun updateState(state: State) {
+        this.state.postValue(state)
     }
 
     private fun getRetrofit(): Retrofit {

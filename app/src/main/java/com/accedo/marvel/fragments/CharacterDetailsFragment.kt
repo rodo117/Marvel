@@ -1,5 +1,6 @@
 package com.accedo.marvel.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.accedo.marvel.R
 import com.accedo.marvel.adapters.ClickListener
@@ -40,12 +42,22 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.details_layout, container, false)
+        val orientation = resources.configuration.orientation
 
-        val character = arguments?.getSerializable(KEY) as? Character
+        var view = inflater.inflate(R.layout.details_layout, container, false)
+        view.recycler_view.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            view = inflater.inflate(R.layout.details_landscape_tablet_layout, container, false)
+        }
+        view.recycler_view.layoutManager = GridLayoutManager(context, 3);
+
 
         adapter = MarvelPagedListAdapter(true,this);
-        view.recycler_view.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false);
+        val character = arguments?.getSerializable(KEY) as? Character
+
+
         view.recycler_view.adapter = adapter
         view.textview_name.text = character?.description
         Picasso.get().load(character?.image.toString()).into(view.imageview_image)
