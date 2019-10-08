@@ -45,16 +45,20 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
         val orientation = resources.configuration.orientation
 
         var view = inflater.inflate(R.layout.details_layout, container, false)
-        view.recycler_view.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             view = inflater.inflate(R.layout.details_landscape_tablet_layout, container, false)
         }
-        view.recycler_view.layoutManager = GridLayoutManager(context, 3);
+        if (resources.getBoolean(R.bool.isCellphone)) {
+            view.recycler_view.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        } else {
+            view.recycler_view.layoutManager = GridLayoutManager(context, 3);
+        }
 
 
-        adapter = MarvelPagedListAdapter(true,this);
+
+
+        adapter = MarvelPagedListAdapter(true, this);
         val character = arguments?.getSerializable(KEY) as? Character
 
 
