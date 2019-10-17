@@ -40,14 +40,7 @@ class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource
             val response = call.body() as CharactersResponse
             if (response.status == "Ok") {
                 val jsonArray: JsonArray = response.data.getAsJsonArray("results")
-                val size = jsonArray.size()
-                var sub = 0
-                sub = if (size >= 20) {
-                    20
-                } else {
-                    size
-                }
-                jsonArray.toList().subList(0, sub).forEach { jsonObject ->
+                jsonArray.toList().take(20).forEach { jsonObject ->
                     val id = jsonObject.asJsonObject.get("id").asString
                     val title = jsonObject.asJsonObject.get("title").asString
                     val thumbnail = jsonObject.asJsonObject.get("thumbnail")

@@ -55,9 +55,6 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
             view.recycler_view.layoutManager = GridLayoutManager(context, 3);
         }
 
-
-
-
         adapter = MarvelPagedListAdapter(true, this);
         val character = arguments?.getSerializable(KEY) as? Character
 

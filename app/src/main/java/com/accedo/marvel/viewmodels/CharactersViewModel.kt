@@ -16,7 +16,7 @@ class CharactersViewModel(isCellphone: Boolean) : ViewModel() {
 
     val liveDataCharacters: LiveData<PagedList<Character>>
 
-    var liveDataComics: LiveData<PagedList<Character>>
+    lateinit var liveDataComics: LiveData<PagedList<Character>>
     private val modelFactory = PagedConfigurationFactory()
     val repository = Repository()
 
@@ -26,7 +26,6 @@ class CharactersViewModel(isCellphone: Boolean) : ViewModel() {
 
     init {
         liveDataCharacters = repository.getLivePagedListBuilder(modelFactory.getConfiguration(isCellphone)).build()
-        liveDataComics = repository.getLivePagedListBuilder(modelFactory.getConfiguration(false),Character(name="", image = "") ).build()
     }
 
     fun initLiveDataComics(character: Character){
