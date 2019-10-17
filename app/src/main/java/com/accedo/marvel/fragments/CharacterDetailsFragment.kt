@@ -17,10 +17,8 @@ import com.accedo.marvel.adapters.MarvelPagedListAdapter
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.viewmodels.CharactersViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.card_view.view.*
 import kotlinx.android.synthetic.main.card_view.view.imageview_image
 import kotlinx.android.synthetic.main.card_view.view.textview_name
-import kotlinx.android.synthetic.main.card_view_details.view.*
 import kotlinx.android.synthetic.main.items_recycler_view.view.*
 
 class CharacterDetailsFragment : Fragment(), ClickListener {
@@ -73,9 +71,6 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
         }
 
         viewModel.liveDataComics.observe(this, observer)
-
-        println(character?.name)
-
 
         return view
     }
