@@ -39,7 +39,11 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val orientation = resources.configuration.orientation
 
         var view = inflater.inflate(R.layout.details_layout, container, false)
@@ -59,7 +63,9 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
 
         view.recycler_view.adapter = adapter
         view.textview_name.text = character?.description
-        Picasso.get().load(character?.image.toString()).into(view.imageview_image)
+        Picasso.get()
+            .load(character?.image)
+            .into(view.imageview_image)
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[CharactersViewModel::class.java]

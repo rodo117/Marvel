@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         val observer = Observer<Character> { character ->
-            supportActionBar?.setTitle(character.name);
+            supportActionBar?.title = character.name;
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, CharacterDetailsFragment.newInstance(character)).addToBackStack(null)
