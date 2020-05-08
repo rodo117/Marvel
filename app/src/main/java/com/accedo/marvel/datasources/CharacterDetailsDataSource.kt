@@ -1,15 +1,12 @@
 package com.accedo.marvel.datasources
 
 
-import android.widget.Toast
 import com.accedo.marvel.data.Character
 import androidx.paging.PageKeyedDataSource
 import com.accedo.marvel.ApiService
+import com.accedo.marvel.BuildConfig
 import com.accedo.marvel.data.CharactersResponse
-import com.accedo.marvel.datasources.CharactersDataSource.Companion.API_KEY
-import com.accedo.marvel.datasources.CharactersDataSource.Companion.HASH
-import com.accedo.marvel.datasources.CharactersDataSource.Companion.TS
-import com.google.gson.JsonArray
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -32,23 +29,18 @@ class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource
 
 
     private fun getComicsRequestList(character: Character): MutableList<Character> {
-        var list: MutableList<Character> = ArrayList<Character>()
+        var list: MutableList<Character> = ArrayList()
 
         try {
-        val call = getRetrofit(character.id).create(ApiService::class.java).getComics(TS, API_KEY, HASH).execute()
+        val call = getRetrofit(character.id).create(ApiService::class.java).getComics(BuildConfig.TS, BuildConfig.API_KEY, BuildConfig.HASH).execute()
 
             val response = call.body() as CharactersResponse
             if (response.status == "Ok") {
-                val jsonArray: JsonArray = response.data.getAsJsonArray("results")
-                jsonArray.toList().take(20).forEach { jsonObject ->
-                    val id = jsonObject.asJsonObject.get("id").asString
-                    val title = jsonObject.asJsonObject.get("title").asString
-                    val thumbnail = jsonObject.asJsonObject.get("thumbnail")
-                    val path = thumbnail.asJsonObject.get("path").asString
-                    val extension = thumbnail.asJsonObject.get("extension").asString
-                    val image = path.plus("/").plus("standard_medium").plus(".").plus(extension)
-                    list.add(Character(id = id, name=title , image=image))
-                }
+                Observable.fromIterable(response.data.result).map { character: Character? ->
+                    character?.image = character?.thumbnail?.path.plus("/").plus("standard_medium").plus(".").plus(character?.thumbnail?.extension)
+                    character?.let { list.add(it) }
+                }.subscribe()
+
             }
         }catch (e: Exception){
         }
@@ -57,7 +49,7 @@ class CharacterDetailsDataSource(val character: Character) : PageKeyedDataSource
 
     private fun getRetrofit(id:String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://gateway.marvel.com/v1/public/characters/$id/")
+            .baseUrl(BuildConfig.DETAIL_CHARACTER_BASE_URL+"$id/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

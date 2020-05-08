@@ -27,17 +27,7 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: CharactersViewModel
     lateinit var adapter: MarvelPagedListAdapter
-
-    companion object {
-        private val KEY = "details_character"
-        fun newInstance(characterSelected: Character): CharacterDetailsFragment {
-            val args = Bundle()
-            args.putSerializable(KEY, characterSelected)
-            val fragment = CharacterDetailsFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private val KEY = "details_character"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val orientation = resources.configuration.orientation
@@ -59,7 +49,9 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
 
         view.recycler_view.adapter = adapter
         view.textview_name.text = character?.description
-        Picasso.get().load(character?.image.toString()).into(view.imageview_image)
+        Picasso.get()
+            .load(character?.image)
+            .into(view.imageview_image)
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[CharactersViewModel::class.java]

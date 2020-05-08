@@ -9,10 +9,10 @@ class PagedConfigurationFactory {
 
     fun getConfiguration(isGoingToShowTen: Boolean): PagedList.Config {
 
-        if (isGoingToShowTen) {
-            return createConfig(CELLPHONE_VALUE)
+        return if (isGoingToShowTen) {
+            createConfig(CELLPHONE_VALUE)
         } else {
-            return createConfig(TABLET_AND_COMICS_VALUE)
+            createConfig(TABLET_AND_COMICS_VALUE)
         }
 
     }
