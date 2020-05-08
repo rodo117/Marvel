@@ -27,23 +27,9 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: CharactersViewModel
     lateinit var adapter: MarvelPagedListAdapter
+    private val KEY = "details_character"
 
-    companion object {
-        private val KEY = "details_character"
-        fun newInstance(characterSelected: Character): CharacterDetailsFragment {
-            val args = Bundle()
-            args.putSerializable(KEY, characterSelected)
-            val fragment = CharacterDetailsFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val orientation = resources.configuration.orientation
 
         var view = inflater.inflate(R.layout.details_layout, container, false)
