@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
 
-        viewModel = ViewModelProviders.of(this,CustomViewModelFactory(isCellphone)).get(CharactersViewModel::class.java)
+        viewModel = ViewModelProvider(this,CustomViewModelFactory(isCellphone, application)).get(CharactersViewModel::class.java)
 
 
         val observer = Observer<Character> { character ->

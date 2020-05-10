@@ -13,7 +13,7 @@
     <dimen name="card_size">200dp</dimen>
     <dimen name="default_elevation">7dp</dimen>
 
-    <dimen name="text_normal_size">14sp</dimen>
+    <dimen name="text_normal_size">16sp</dimen>
     <dimen name="text_medium_size">12sp</dimen>
     <dimen name="text_title_size">18sp</dimen>
 

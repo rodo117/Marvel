@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.card_view.view.imageview_image
 import kotlinx.android.synthetic.main.card_view.view.textview_name
 import kotlinx.android.synthetic.main.items_recycler_view.view.*
 
-class CharacterDetailsFragment : Fragment(), ClickListener {
+class CharacterDetailsFragment : Fragment(), ClickListener, OnClickFavoriteListener {
     override fun invoke(p1: Character) {
     }
 
@@ -43,7 +43,7 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
             view.recycler_view.layoutManager = GridLayoutManager(context, 3);
         }
 
-        adapter = MarvelPagedListAdapter(true, this);
+        adapter = MarvelPagedListAdapter(true, this, this);
         val character = arguments?.getSerializable(KEY) as? Character
 
 
@@ -54,7 +54,7 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
             .into(view.imageview_image)
 
         viewModel = activity?.run {
-            ViewModelProviders.of(this)[CharactersViewModel::class.java]
+            ViewModelProvider(this)[CharactersViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         character?.let { viewModel.initLiveDataComics(it) }
 
@@ -62,9 +62,12 @@ class CharacterDetailsFragment : Fragment(), ClickListener {
             adapter.submitList(list)
         }
 
-        viewModel.liveDataComics.observe(this, observer)
+        viewModel.liveDataComics.observe(viewLifecycleOwner, observer)
 
         return view
+    }
+
+    override fun favoriteClicked(characterID: String?, isChecked: Boolean) {
     }
 
 

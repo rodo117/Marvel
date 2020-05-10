@@ -7,7 +7,8 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/card_size"
     android:layout_margin="@dimen/medium_higher_margin"
-    card_view:cardElevation="@dimen/default_elevation">
+    card_view:cardElevation="@dimen/default_elevation"
+    card_view:cardBackgroundColor="@color/card_view_details_background_color">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,10 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:text="@string/character_name"
             android:textSize="@dimen/text_normal_size"
             android:maxWidth="@dimen/landscape_imageview_width"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageview_image" />
 

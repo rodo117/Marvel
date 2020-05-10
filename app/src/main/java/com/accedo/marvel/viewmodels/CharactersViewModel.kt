@@ -1,35 +1,51 @@
 package com.accedo.marvel.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.accedo.marvel.data.Character
-import com.accedo.marvel.data.State
-import com.accedo.marvel.datasources.CharactersDataSource
 import com.accedo.marvel.factories.PagedConfigurationFactory
-import com.accedo.marvel.repositories.Repository
+import com.accedo.marvel.repositories.CharactersRepository
+import com.accedo.marvel.repositories.CharactersRepositoryImplementation
+import com.accedo.marvel.repositories.FavoriteCharacterRepositoryImplementation
+import com.accedo.marvel.room.database.CharactersRoomDataBase
+import com.accedo.marvel.room.entities.FavoriteCharacter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-
-class CharactersViewModel(isCellphone: Boolean) : ViewModel() {
+class CharactersViewModel(isCellphone: Boolean, application: Application) : AndroidViewModel(application) {
 
     val liveDataCharacters: LiveData<PagedList<Character>>
 
+    val favoriteCharactersLiveData: LiveData<List<FavoriteCharacter>>
+    private val favoriteCharactersRepository: FavoriteCharacterRepositoryImplementation
+
     lateinit var liveDataComics: LiveData<PagedList<Character>>
     private val modelFactory = PagedConfigurationFactory()
-    val repository = Repository()
+    private val repository:CharactersRepository = CharactersRepositoryImplementation()
 
     val liveDataCharacterSelected: MutableLiveData<Character> by lazy {
         MutableLiveData<Character>()
     }
 
     init {
-        liveDataCharacters = repository.getLivePagedListBuilder(modelFactory.getConfiguration(isCellphone)).build()
+        liveDataCharacters = repository.getCharacters(modelFactory.getConfiguration(isCellphone)).build()
+
+        val favoritesCharactersDao = CharactersRoomDataBase.getDatabase(application).favoriteCharactersDao()
+        favoriteCharactersRepository = FavoriteCharacterRepositoryImplementation(favoritesCharactersDao)
+        favoriteCharactersLiveData = favoriteCharactersRepository.favoriteCharactersLiveData
     }
 
     fun initLiveDataComics(character: Character){
-        liveDataComics = repository.getLivePagedListBuilder(modelFactory.getConfiguration(false),character).build()
+        liveDataComics = repository.getCharacters(modelFactory.getConfiguration(false),character).build()
+    }
+
+    fun favoriteCharacterClicked(characterId: String, isChecked:Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        if(isChecked) {
+            favoriteCharactersRepository.insertFavoriteCharacter(FavoriteCharacter(characterId))
+        }else {
+            favoriteCharactersRepository.deleteFavoriteCharacter(FavoriteCharacter(characterId))
+        }
     }
 
 }

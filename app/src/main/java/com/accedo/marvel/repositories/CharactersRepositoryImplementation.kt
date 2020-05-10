@@ -10,9 +10,9 @@ import com.accedo.marvel.datasources.CharacterDetailsDataSource
 import com.accedo.marvel.datasources.CharactersDataSource
 
 
-class Repository() {
+class CharactersRepositoryImplementation:CharactersRepository {
 
-    fun getLivePagedListBuilder(config: PagedList.Config, character: Character? = null): LivePagedListBuilder<Int, Character> {
+    override fun getCharacters(config: PagedList.Config, character: Character?): LivePagedListBuilder<Int, Character> {
 
         val dataSourceFactory = object : DataSource.Factory<Int, Character>() {
             override fun create(): DataSource<Int, Character> {
@@ -23,7 +23,7 @@ class Repository() {
                 }
             }
         }
-        return LivePagedListBuilder<Int, Character>(dataSourceFactory, config)
+        return LivePagedListBuilder(dataSourceFactory, config)
     }
 
 }

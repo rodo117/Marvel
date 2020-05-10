@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/medium_higher_margin"
-    card_view:cardElevation="@dimen/default_elevation">
+    card_view:cardElevation="@dimen/default_elevation"
+    card_view:cardBackgroundColor="@color/card_view_background_color">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,25 +17,45 @@
 
         <ImageView
             android:id="@+id/imageview_image"
-            android:scaleType="fitCenter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_background"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
-            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_launcher_background"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textview_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:textColor="@android:color/black"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/text_normal_size"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageview_image"
             app:layout_constraintTop_toBottomOf="@+id/imageview_image"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            card_view:layout_constraintEnd_toStartOf="@+id/img_button_favorite"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            tools:text="Spider Man" />
+
+        <CheckBox
+            android:id="@+id/img_button_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_star"
+            android:backgroundTint="@android:color/transparent"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="@+id/imageview_image"
+            card_view:layout_constraintTop_toBottomOf="@+id/imageview_image"
+            card_view:layout_constraintStart_toEndOf="@id/textview_name"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

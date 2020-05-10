@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +15,11 @@ import com.accedo.marvel.R
 import com.accedo.marvel.adapters.ClickListener
 import com.accedo.marvel.adapters.MarvelPagedListAdapter
 import com.accedo.marvel.data.Character
+import com.accedo.marvel.room.entities.FavoriteCharacter
 import com.accedo.marvel.viewmodels.CharactersViewModel
 import kotlinx.android.synthetic.main.items_recycler_view.view.*
 
-class CharactersFragment : Fragment(), ClickListener {
+class CharactersFragment : Fragment(), ClickListener, OnClickFavoriteListener {
 
     lateinit var adapter: MarvelPagedListAdapter
     private lateinit var viewModel: CharactersViewModel
@@ -29,10 +30,10 @@ class CharactersFragment : Fragment(), ClickListener {
         val isCellphone = resources.getBoolean(R.bool.isCellphone)
 
         viewModel = activity?.run {
-            ViewModelProviders.of(this)[CharactersViewModel::class.java]
+            ViewModelProvider(this)[CharactersViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        adapter = MarvelPagedListAdapter(clickListener=this);
+        adapter = MarvelPagedListAdapter(clickListener=this, favoriteClickListener = this);
 
         if(isCellphone){
             view.recycler_view.layoutManager = LinearLayoutManager(context);
@@ -47,11 +48,16 @@ class CharactersFragment : Fragment(), ClickListener {
 
         view.recycler_view.adapter = adapter
 
-        val observer = Observer<PagedList<Character>> { list ->
-            adapter.submitList(list)
+        val favoriteCharacterObserver = Observer<List<FavoriteCharacter>> { list ->
+            adapter.setFavoriteCharacters(list)
         }
 
-        viewModel.liveDataCharacters.observe(this, observer)
+        val observer = Observer<PagedList<Character>> { list ->
+            adapter.submitList(list)
+            viewModel.favoriteCharactersLiveData.observe(viewLifecycleOwner, favoriteCharacterObserver)
+        }
+
+        viewModel.liveDataCharacters.observe(viewLifecycleOwner, observer)
 
         return view
     }
@@ -60,5 +66,13 @@ class CharactersFragment : Fragment(), ClickListener {
         viewModel.liveDataCharacterSelected.value = characterSelected
     }
 
+    override fun favoriteClicked(characterID: String?, isChecked: Boolean) {
+        characterID?.apply {  viewModel.favoriteCharacterClicked(this, isChecked) }
+    }
 
+
+}
+
+interface OnClickFavoriteListener {
+    fun favoriteClicked (characterID :String?, isChecked:Boolean)
 }
