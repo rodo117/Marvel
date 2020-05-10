@@ -10,8 +10,11 @@ import com.accedo.marvel.R
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.fragments.OnClickFavoriteListener
 import com.accedo.marvel.room.entities.FavoriteCharacter
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.card_view.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 typealias ClickListener = (Character) -> Unit
 class MarvelPagedListAdapter(private val isDetails:Boolean = false, private val clickListener: ClickListener, private val favoriteClickListener: OnClickFavoriteListener) : PagedListAdapter<Character,MarvelPagedListAdapter.ViewHolder >(
@@ -46,12 +49,13 @@ class MarvelPagedListAdapter(private val isDetails:Boolean = false, private val 
         }
     }
 
-    fun setFavoriteCharacters(favoriteCharacterList: List<FavoriteCharacter>){
-        favoriteCharacterList?.forEach{
-            println(it.id)
-            currentList?.forEach{character ->
-               if(character.id == it.id)
-                   character.isFavorite = true
+    fun setFavoriteCharacters(favoriteCharacterList: List<FavoriteCharacter>) {
+        GlobalScope.launch(Dispatchers.Default) {
+            favoriteCharacterList?.forEach {
+                currentList?.forEach { character ->
+                    if (character.id == it.id)
+                        character.isFavorite = true
+                }
             }
         }
         notifyDataSetChanged()
@@ -73,7 +77,7 @@ class MarvelPagedListAdapter(private val isDetails:Boolean = false, private val 
         }
 
         fun ImageView.fromUrl(url: String) {
-            Picasso.get().load(url).into(this)
+            Glide.with(itemView).load(url).placeholder(R.drawable.marvel_placeholder).dontAnimate().into(this)
         }
     }
 

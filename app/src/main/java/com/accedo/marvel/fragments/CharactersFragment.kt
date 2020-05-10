@@ -53,8 +53,9 @@ class CharactersFragment : Fragment(), ClickListener, OnClickFavoriteListener {
         }
 
         val observer = Observer<PagedList<Character>> { list ->
-            adapter.submitList(list)
             viewModel.favoriteCharactersLiveData.observe(viewLifecycleOwner, favoriteCharacterObserver)
+            adapter.submitList(list)
+
         }
 
         viewModel.liveDataCharacters.observe(viewLifecycleOwner, observer)
@@ -69,7 +70,6 @@ class CharactersFragment : Fragment(), ClickListener, OnClickFavoriteListener {
     override fun favoriteClicked(characterID: String?, isChecked: Boolean) {
         characterID?.apply {  viewModel.favoriteCharacterClicked(this, isChecked) }
     }
-
 
 }
 

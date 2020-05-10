@@ -16,9 +16,8 @@ import com.accedo.marvel.adapters.ClickListener
 import com.accedo.marvel.adapters.MarvelPagedListAdapter
 import com.accedo.marvel.data.Character
 import com.accedo.marvel.viewmodels.CharactersViewModel
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.card_view.view.imageview_image
-import kotlinx.android.synthetic.main.card_view.view.textview_name
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.card_view.view.*
 import kotlinx.android.synthetic.main.items_recycler_view.view.*
 
 class CharacterDetailsFragment : Fragment(), ClickListener, OnClickFavoriteListener {
@@ -49,9 +48,12 @@ class CharacterDetailsFragment : Fragment(), ClickListener, OnClickFavoriteListe
 
         view.recycler_view.adapter = adapter
         view.textview_name.text = character?.description
-        Picasso.get()
-            .load(character?.image)
-            .into(view.imageview_image)
+        view.img_button_favorite.isChecked = character?.isFavorite!!
+        view.img_button_favorite.setOnClickListener{
+            character?.isFavorite = view.img_button_favorite.isChecked
+            viewModel.favoriteCharacterClicked(character.id, view.img_button_favorite.isChecked)
+        }
+        Glide.with(view).load(character?.image).placeholder(R.drawable.marvel_placeholder).dontAnimate().into(view.imageview_image)
 
         viewModel = activity?.run {
             ViewModelProvider(this)[CharactersViewModel::class.java]
