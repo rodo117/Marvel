@@ -44,8 +44,13 @@ android {
             buildConfigField "String", "DETAIL_CHARACTER_BASE_URL", "\"http://gateway.marvel.com/v1/public/characters/\""
             buildConfigField "String", "API_KEY", "\"be08c7e14d54e9a3d0ad8b12c1e712d8\""
             buildConfigField "String", "HASH", "\"a66cf9e3611f152f02ef4e3609866681\""
+            buildConfigField "String", "API_KEY_YOUTUBE", "\"AIzaSyCZfOZMVBjedvzljJaqx6S1DpJrtbuFMFw\""
             buildConfigField "Integer", "LIMIT", "10"
             buildConfigField "String", "TS", "\"1\""
+            buildConfigField "String", "PART", "\"snippet\""
+            buildConfigField "String", "MAX_RESULTS", "\"10\""
+            buildConfigField "String", "YOUTUBE_API_BASE_URL", "\" https://www.googleapis.com/youtube/v3/\""
+
         }
 
     }

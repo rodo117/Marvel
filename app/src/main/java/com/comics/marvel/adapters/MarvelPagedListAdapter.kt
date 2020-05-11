@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.comics.marvel.R
-import com.comics.marvel.data.Character
+import com.comics.marvel.data.marvelapi.Character
 import com.comics.marvel.fragments.OnClickFavoriteListener
 import com.comics.marvel.room.entities.FavoriteCharacter
 import com.bumptech.glide.Glide

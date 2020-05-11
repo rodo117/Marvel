@@ -16,5 +16,12 @@
     <fragment
         android:id="@+id/characterDetailsFragment"
         android:name="com.comics.marvel.fragments.CharacterDetailsFragment"
-        tools:layout="@layout/details_layout"/>
+        tools:layout="@layout/details_layout">
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_youtubeCharacterVideos"
+            app:destination="@id/youtubeCharacterVideos" />
+    </fragment>
+    <fragment
+        android:id="@+id/youtubeCharacterVideos"
+        android:name="com.comics.marvel.fragments.YoutubeCharacterVideos" />
 </navigation>

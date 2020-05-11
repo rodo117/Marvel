@@ -1,8 +1,8 @@
-package com.comics.marvel.datasources
+package com.comics.marvel.network.datasources
 
-import com.comics.marvel.ApiService
-import com.comics.marvel.data.Character
-import com.comics.marvel.data.CharactersResponse
+import com.comics.marvel.network.ApiService
+import com.comics.marvel.data.marvelapi.Character
+import com.comics.marvel.data.marvelapi.CharactersResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.paging.PageKeyedDataSource

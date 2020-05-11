@@ -5,9 +5,9 @@ package com.comics.marvel.repositories
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.comics.marvel.data.Character
-import com.comics.marvel.datasources.CharacterDetailsDataSource
-import com.comics.marvel.datasources.CharactersDataSource
+import com.comics.marvel.data.marvelapi.Character
+import com.comics.marvel.network.datasources.CharacterDetailsDataSource
+import com.comics.marvel.network.datasources.CharactersDataSource
 
 
 class CharactersRepositoryImplementation:CharactersRepository {

@@ -1,5 +1,6 @@
-package com.comics.marvel.data
+package com.comics.marvel.data.marvelapi
 
+import com.comics.marvel.data.marvelapi.Character
 import com.google.gson.annotations.SerializedName
 
 data class Data(

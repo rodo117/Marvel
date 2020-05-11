@@ -3,7 +3,6 @@ package com.comics.marvel.activities
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -12,7 +11,7 @@ import androidx.navigation.ui.NavigationUI
 
 
 import com.comics.marvel.R
-import com.comics.marvel.data.Character
+import com.comics.marvel.data.marvelapi.Character
 import com.comics.marvel.viewmodels.CharactersViewModel
 import com.comics.marvel.viewmodels.CustomViewModelFactory
 
@@ -39,7 +38,6 @@ class MainActivity : AppCompatActivity() {
 
 
         val observer = Observer<Character> { character ->
-            supportActionBar?.title = character.name;
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             val bundle = Bundle()
             bundle.putSerializable(KEY, character)
@@ -51,26 +49,4 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp() = navigationController.navigateUp()
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-            changeToolBarItems()
-        } else
-            super.onBackPressed()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            changeToolBarItems()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun changeToolBarItems() {
-        supportFragmentManager.popBackStack()
-        supportActionBar?.setTitle(R.string.app_name)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
 }

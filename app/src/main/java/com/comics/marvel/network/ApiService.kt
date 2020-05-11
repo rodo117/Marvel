@@ -1,7 +1,8 @@
-package com.comics.marvel
+package com.comics.marvel.network
 
 
-import com.comics.marvel.data.CharactersResponse
+import com.comics.marvel.data.marvelapi.CharactersResponse
+import com.comics.marvel.data.youtubeapi.YoutubeDataResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,4 +15,7 @@ interface ApiService {
 
     @GET("comics?")
     fun getComics(@Query("ts") ts: String, @Query("apikey") apiKey: String, @Query("hash") hash: String ): Call<CharactersResponse>
+
+    @GET("search?")
+    fun getYoutubeVideos(@Query("q") q: String, @Query("part") part: String, @Query("maxResults") maxResults: String,  @Query("key") key: String ): Call<YoutubeDataResponse>
 }

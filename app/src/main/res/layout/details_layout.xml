@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <include
+            android:id="@+id/card_view"
             layout="@layout/card_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -18,15 +19,31 @@
 
         </include>
 
+        <TextView
+            android:id="@+id/tv_comics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/comics"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/include5"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintTop_toBottomOf="@id/card_view" />
+
         <include
             layout="@layout/items_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_view">
-
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toStartOf="@id/card_view"
+            app:layout_constraintTop_toBottomOf="@id/tv_comics">
         </include>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

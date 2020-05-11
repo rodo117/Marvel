@@ -1,7 +1,7 @@
 package com.comics.marvel.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import com.comics.marvel.data.Character
+import com.comics.marvel.data.marvelapi.Character
 
 class CharacterDiffCallback : DiffUtil.ItemCallback<Character>() {
 

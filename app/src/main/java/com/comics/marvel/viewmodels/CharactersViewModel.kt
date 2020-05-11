@@ -3,7 +3,7 @@ package com.comics.marvel.viewmodels
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.paging.PagedList
-import com.comics.marvel.data.Character
+import com.comics.marvel.data.marvelapi.Character
 import com.comics.marvel.factories.PagedConfigurationFactory
 import com.comics.marvel.repositories.CharactersRepository
 import com.comics.marvel.repositories.CharactersRepositoryImplementation
