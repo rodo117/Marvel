@@ -47,7 +47,7 @@ class YoutubeRecyclerAdapter: RecyclerView.Adapter<YoutubeRecyclerAdapter.ViewHo
         }
 
         private fun ImageView.fromUrl(url: String) {
-            Glide.with(itemView).load(url).placeholder(R.drawable.marvel_placeholder).dontAnimate().into(this)
+            Glide.with(itemView).load(url).placeholder(R.drawable.youtube_placeholder).dontAnimate().into(this)
         }
 
 
